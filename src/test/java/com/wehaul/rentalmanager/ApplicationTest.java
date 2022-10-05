@@ -35,44 +35,4 @@ class ApplicationTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(OK);
     }
-
-    @Test
-    void shouldPersistCustomerProfileOnPostRequest() throws Exception {
-        var response = restTemplate.postForEntity(
-                "/api/customer-profiles",
-                createCustomerProfileRequest(),
-                String.class
-        );
-
-        assertThat(response.getStatusCode()).isEqualTo(CREATED);
-        Long profileId = extractCustomerProfileFromLocationHeader(response);
-
-        response = restTemplate.getForEntity("/api/customer-profiles/" + profileId, String.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(OK);
-        var expectedJson = "{" +
-                "\"id\": " + profileId + "," +
-                "\"firstName\": \"Joe\"," +
-                "\"lastName\": \"Doe\"," +
-                "\"email\": \"joe.doe@test.org\"" +
-                "}";
-        JSONAssert.assertEquals(expectedJson, response.getBody(), false);
-    }
-
-    private HttpEntity<String> createCustomerProfileRequest() {
-        var body = "{" +
-                "\"firstName\": \"Joe\"," +
-                "\"lastName\": \"Doe\"," +
-                "\"email\": \"joe.doe@test.org\"" +
-                "}";
-
-        var headers = new HttpHeaders();
-        headers.setContentType(APPLICATION_JSON);
-        return new HttpEntity<>(body, headers);
-    }
-
-    private Long extractCustomerProfileFromLocationHeader(ResponseEntity<String> responseEntity) {
-        var location = responseEntity.getHeaders().getLocation();
-        return Long.decode(location.getPath().substring(location.getPath().lastIndexOf("/") + 1));
-    }
 }

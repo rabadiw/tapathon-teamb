@@ -25,8 +25,8 @@ class ReservationManagerServiceTest {
     @Test
     void shouldDelegateToRepositoryToRetrieveAvailableTrucks() {
         var reservations = List.of(
-                Reservation.builder().id(1L).truckId(1L).state(ReservationState.available).build(),
-                Reservation.builder().id(3L).truckId(3L).state(ReservationState.available).build()
+                new Reservation(1L, 1L, ReservationState.available),
+                new Reservation(3L, 3L, ReservationState.available)
         );
         when(repository.findByState(ReservationState.available)).thenReturn(reservations);
 
