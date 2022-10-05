@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,5 +35,22 @@ class ReservationManagerServiceTest {
 
         Assertions.assertThat(result).isEqualTo(List.of("1", "3"));
         verify(repository).findByState(ReservationState.available);
+    }
+
+    @Test
+    void shouldReserveTruckAndPublishEvent(){
+        var reservationId = 2L;
+        var truckId = 2L;
+
+        var reservation = new Reservation(reservationId, truckId, ReservationState.available);
+        when(repository.findById(reservation.id())).thenReturn(Optional.of(reservation));
+
+        subject.reserve(reservationId);
+
+        verify(repository).findById(reservation.id());
+
+        var updatedReservation = subject.getReservation(reservation.id());
+
+        Assertions.assertThat(updatedReservation.get().state()).isEqualTo(ReservationState.reserved);
     }
 }

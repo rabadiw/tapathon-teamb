@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +32,7 @@ class RentalManagerControllerTest {
 
         @Test
         void shouldReturnAListOfAvailableTrucks() throws Exception {
-            when(service.getAvailableTrucks()).thenReturn(List.of("1","2","3","4","5"));
+            when(service.getAvailableTrucks()).thenReturn(List.of("1", "2", "3", "4", "5"));
 
             mockMvc.perform(get("/api/availabletrucks")
                             .accept(APPLICATION_JSON))
@@ -41,6 +40,17 @@ class RentalManagerControllerTest {
                     .andExpect(content().json("[\"1\",\"2\",\"3\",\"4\",\"5\"]"));
 
             verify(service).getAvailableTrucks();
+        }
+
+        @Test
+        void shouldReserveTruck() throws Exception {
+            var reservationId = 3L;
+
+            mockMvc.perform(post("/api/reserve/" + reservationId)
+                            .accept(APPLICATION_JSON))
+                    .andExpect(status().isOk());
+
+            verify(service).reserve(reservationId);
         }
     }
 }

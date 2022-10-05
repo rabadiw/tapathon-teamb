@@ -3,6 +3,7 @@ package com.wehaul.rentalmanager.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
 public class Reservation {
     @Id
@@ -31,6 +32,10 @@ public class Reservation {
 
     public ReservationState state() {
         return state;
+    }
+
+    public void setState(ReservationState state) {
+        this.state = state;
     }
 
 }
