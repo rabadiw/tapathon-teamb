@@ -1,10 +1,10 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: customer-profile
+  name: rental-manager
   annotations:
-    "backstage.io/kubernetes-label-selector": "app.kubernetes.io/part-of=customer-profile"
+    "backstage.io/kubernetes-label-selector": "app.kubernetes.io/part-of=rental-manager"
 spec:
   type: service
   lifecycle: experimental
-  owner: default-team
+  owner: team-b
