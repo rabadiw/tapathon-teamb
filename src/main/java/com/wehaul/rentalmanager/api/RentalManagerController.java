@@ -38,12 +38,4 @@ class RentalManagerController {
         return ok(service.reserve(reservationId));
     }
 
-
-    /*
-        @PostMapping("/api/rental/reserved")
-    public Fruit generateReservationEvent() {
-        return messageService.generate("reservation");
-    }
-    */
-
 }

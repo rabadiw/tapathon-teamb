@@ -1,6 +1,7 @@
 package com.wehaul.rentalmanager.domain;
 
 import com.wehaul.rentalmanager.data.ReservationRepository;
+import com.wehaul.rentalmanager.initiator.PublishService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +23,9 @@ class ReservationManagerServiceTest {
 
     @InjectMocks
     private ReservationManagerService subject;
+
+    @Mock
+    private PublishService publishService;
 
     @Test
     void shouldDelegateToRepositoryToRetrieveAvailableTrucks() {
@@ -52,5 +56,6 @@ class ReservationManagerServiceTest {
         var updatedReservation = subject.getReservation(reservation.id());
 
         Assertions.assertThat(updatedReservation.get().state()).isEqualTo(ReservationState.reserved);
+        verify(publishService).publishReservation("reserved", updatedReservation.get());
     }
 }

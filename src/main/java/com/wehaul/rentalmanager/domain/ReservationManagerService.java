@@ -1,6 +1,7 @@
 package com.wehaul.rentalmanager.domain;
 
 import com.wehaul.rentalmanager.data.ReservationRepository;
+import com.wehaul.rentalmanager.initiator.PublishService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class ReservationManagerService {
     private final ReservationRepository repository;
 
-//    private final CustomerProfileRepository repository;
+    private final PublishService publishService;
 
-    public ReservationManagerService(ReservationRepository repository) {
+    public ReservationManagerService(ReservationRepository repository, PublishService publishService) {
+
         this.repository = repository;
+        this.publishService = publishService;
     }
 
 //    @Transactional
@@ -44,30 +47,14 @@ public class ReservationManagerService {
 
 
         if (reservation.get().state() == ReservationState.available) {
-            var reservationToUpdate = reservation.get();
-            reservationToUpdate.setState(ReservationState.reserved);
-            repository.save(reservationToUpdate);
-            //todo publish event
+            var updatedReservation = reservation.get();
+            updatedReservation.setState(ReservationState.reserved);
+            repository.save(updatedReservation);
+            publishService.publishReservation("reserved", updatedReservation);
         } else {
             return null; //todo throw error?
         }
 
-
-        /*
-         try to find reservation record based on truck id
-         if it exists and state is available, update state to reserved
-
-         if truck is not available
-
-         if truck id was not found then:
-         1 -> create new reservation
-         2 -> assign to the reservation
-         3 -> save to db
-         4 -> publish event
-                 resevation{
-                  truckId
-                 }
-        */
         return null;
     }
 

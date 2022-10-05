@@ -12,6 +12,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByState(ReservationState available);
 
-    Void setState(Long reservationId, ReservationState newState);
-
 }

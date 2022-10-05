@@ -1,7 +1,6 @@
 package com.wehaul.rentalmanager.initiator;
 
 import com.wehaul.rentalmanager.domain.Reservation;
-import com.wehaul.rentalmanager.domain.ReservationState;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +13,8 @@ public class PublishService {
         this.streamBridge = streamBridge;
     }
 
-    public Reservation generate(String type) {
-        Reservation reservation = new Reservation(3L, 7L, ReservationState.reserved);
+    public void publishReservation(String type, Reservation reservation) {
         streamBridge.send(type, reservation);
-        return reservation;
     }
 }
 
