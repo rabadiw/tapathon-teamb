@@ -11,6 +11,9 @@ spring:
     password: password
     driverClassName: org.h2.Driver
   flyway.enabled: true
+  h2:
+    console:
+      enabled: true
   cloud:
     function:
       definition: truckBought
