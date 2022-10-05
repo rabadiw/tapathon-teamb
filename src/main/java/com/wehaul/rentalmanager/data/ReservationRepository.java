@@ -1,43 +1,11 @@
 package com.wehaul.rentalmanager.data;
 
 import com.wehaul.rentalmanager.domain.Reservation;
-import com.wehaul.rentalmanager.domain.NewCustomerProfile;
-import org.springframework.stereotype.Component;
+import com.wehaul.rentalmanager.domain.ReservationState;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
-@Component
-public class ReservationRepository {
-
-    private final CustomerProfileJpaRepository jpaRepository;
-
-    public ReservationRepository(CustomerProfileJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
-
-    public Reservation create(NewCustomerProfile newCustomerProfile) {
-        var savedEntity = jpaRepository.save(toEntity(newCustomerProfile));
-        return fromEntity(savedEntity);
-    }
-
-    public Optional<Reservation> findById(Long id) {
-        return jpaRepository.findById(id)
-                .map(this::fromEntity);
-    }
-
-    private CustomerProfileEntity toEntity(NewCustomerProfile newCustomerProfile) {
-        var entity = new CustomerProfileEntity();
-        entity.setFirstName(newCustomerProfile.firstName());
-        entity.setLastName(newCustomerProfile.lastName());
-        entity.setEmail(newCustomerProfile.email());
-        return entity;
-    }
-
-    private Reservation fromEntity(CustomerProfileEntity entity) {
-        return new Reservation(
-                entity.getId(),
-                entity.getFirstName(),
-                entity.getLastName(),
-                entity.getEmail());
-    }
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    List<Reservation> findByState(ReservationState available);
 }

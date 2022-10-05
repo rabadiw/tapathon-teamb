@@ -8,11 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.util.List;
 
-import static com.wehaul.rentalmanager.domain.TestData.testCustomerProfile;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,26 +22,17 @@ class ReservationManagerServiceTest {
     @InjectMocks
     private ReservationManagerService subject;
 
-//    @Test
-//    void shouldDelegateToRepositoryToPersistProfile() {
-//        NewCustomerProfile newCustomerProfile = testNewCustomerProfile();
-//        CustomerProfile customerProfile = testCustomerProfile();
-//        when(repository.create(any())).thenReturn(customerProfile);
-//
-//        var result = subject.create(newCustomerProfile);
-//
-//        assertThat(result).isSameAs(customerProfile);
-//        verify(repository).create(newCustomerProfile);
-//    }
-
     @Test
     void shouldDelegateToRepositoryToRetrieveAvailableTrucks() {
-        var optionalCustomerProfile = Optional.of(testCustomerProfile());
-        when(repository.findById(any())).thenReturn(optionalCustomerProfile);
+        var reservations = List.of(
+                Reservation.builder().id(1L).truckId(1L).state(ReservationState.available).build(),
+                Reservation.builder().id(3L).truckId(3L).state(ReservationState.available).build()
+        );
+        when(repository.findByState(ReservationState.available)).thenReturn(reservations);
 
-        var result = subject.getById(123L);
+        var result = subject.getAvailableTrucks();
 
-        Assertions.assertThat(result).isSameAs(optionalCustomerProfile);
-        verify(repository).findById(123L);
+        Assertions.assertThat(result).isEqualTo(List.of("1", "3"));
+        verify(repository).findByState(ReservationState.available);
     }
 }
