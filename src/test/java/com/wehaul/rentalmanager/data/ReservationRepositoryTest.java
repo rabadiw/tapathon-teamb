@@ -11,10 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class CustomerProfileRepositoryTest {
+class ReservationRepositoryTest {
 
     @Autowired
-    private CustomerProfileRepository subject;
+    private ReservationRepository subject;
 
     @Test
 	void shouldPersistCustomerProfile() {

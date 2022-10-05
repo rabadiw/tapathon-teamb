@@ -2,8 +2,8 @@ package com.wehaul.rentalmanager.domain;
 
 public class TestData {
 
-    public static CustomerProfile testCustomerProfile() {
-        return new CustomerProfile(123L, "Joe", "Doe", "joe.doe@test.org");
+    public static Reservation testReservation() {
+        return new Reservation(123L, );
     }
 
     public static NewCustomerProfile testNewCustomerProfile() {

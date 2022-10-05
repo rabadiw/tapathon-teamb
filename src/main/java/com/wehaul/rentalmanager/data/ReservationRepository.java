@@ -1,26 +1,26 @@
 package com.wehaul.rentalmanager.data;
 
-import com.wehaul.rentalmanager.domain.CustomerProfile;
+import com.wehaul.rentalmanager.domain.Reservation;
 import com.wehaul.rentalmanager.domain.NewCustomerProfile;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public class CustomerProfileRepository {
+public class ReservationRepository {
 
     private final CustomerProfileJpaRepository jpaRepository;
 
-    public CustomerProfileRepository(CustomerProfileJpaRepository jpaRepository) {
+    public ReservationRepository(CustomerProfileJpaRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 
-    public CustomerProfile create(NewCustomerProfile newCustomerProfile) {
+    public Reservation create(NewCustomerProfile newCustomerProfile) {
         var savedEntity = jpaRepository.save(toEntity(newCustomerProfile));
         return fromEntity(savedEntity);
     }
 
-    public Optional<CustomerProfile> findById(Long id) {
+    public Optional<Reservation> findById(Long id) {
         return jpaRepository.findById(id)
                 .map(this::fromEntity);
     }
@@ -33,8 +33,8 @@ public class CustomerProfileRepository {
         return entity;
     }
 
-    private CustomerProfile fromEntity(CustomerProfileEntity entity) {
-        return new CustomerProfile(
+    private Reservation fromEntity(CustomerProfileEntity entity) {
+        return new Reservation(
                 entity.getId(),
                 entity.getFirstName(),
                 entity.getLastName(),
