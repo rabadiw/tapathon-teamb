@@ -19,5 +19,5 @@ spec:
   source:
     git:
       ref:
-        branch: main
-      url: https://github.com/d-lorenc/tapathon-accelerator.git
+        branch: base
+      url: https://github.com/rabadiw/tapathon-teamb.git
