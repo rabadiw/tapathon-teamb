@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ReservationManagerService {
     private final ReservationRepository repository;
 
@@ -40,7 +40,7 @@ public class ReservationManagerService {
             var updatedReservation = reservation.get();
             updatedReservation.setState(ReservationState.reserved);
             repository.save(updatedReservation);
-            publishService.publishReservation("reserved", updatedReservation);
+//            publishService.publishReservation("reserved", updatedReservation);
         } else {
             return null; //todo throw error?
         }
