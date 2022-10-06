@@ -47,15 +47,15 @@ class ReservationManagerServiceTest {
         var truckId = 2L;
 
         var reservation = new Reservation(reservationId, truckId, ReservationState.available);
-        when(repository.findById(reservation.id())).thenReturn(Optional.of(reservation));
+        when(repository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
 
         subject.reserve(reservationId);
 
-        verify(repository).findById(reservation.id());
+        verify(repository).findById(reservation.getId());
 
-        var updatedReservation = subject.getReservation(reservation.id());
+        var updatedReservation = subject.getReservation(reservation.getId());
 
-        Assertions.assertThat(updatedReservation.get().state()).isEqualTo(ReservationState.reserved);
+        Assertions.assertThat(updatedReservation.get().getState()).isEqualTo(ReservationState.reserved);
         verify(publishService).publishReservation("reserved", updatedReservation.get());
     }
 }

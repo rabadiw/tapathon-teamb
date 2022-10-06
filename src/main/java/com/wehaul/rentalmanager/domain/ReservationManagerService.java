@@ -32,7 +32,7 @@ public class ReservationManagerService {
 
     public List<String> getAvailableTrucks() {
         return repository.findByState(ReservationState.available).stream()
-                .map(Reservation::id)
+                .map(Reservation::getId)
                 .map(Object::toString)
                 .toList();
     }
@@ -46,7 +46,7 @@ public class ReservationManagerService {
         }
 
 
-        if (reservation.get().state() == ReservationState.available) {
+        if (reservation.get().getState() == ReservationState.available) {
             var updatedReservation = reservation.get();
             updatedReservation.setState(ReservationState.reserved);
             repository.save(updatedReservation);
