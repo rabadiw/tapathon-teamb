@@ -21,15 +21,6 @@ public class ReservationManagerService {
         this.publishService = publishService;
     }
 
-//    @Transactional
-//    public CustomerProfile create(NewCustomerProfile newCustomerProfile) {
-//        return repository.create(newCustomerProfile);
-//    }
-//
-//    public Optional<CustomerProfile> getById(Long id) {
-//        return repository.findById(id);
-//    }
-
     public List<String> getAvailableTrucks() {
         return repository.findByState(ReservationState.available).stream()
                 .map(Reservation::getId)
@@ -45,7 +36,6 @@ public class ReservationManagerService {
             return null; //todo throw error?
         }
 
-
         if (reservation.get().getState() == ReservationState.available) {
             var updatedReservation = reservation.get();
             updatedReservation.setState(ReservationState.reserved);
@@ -57,6 +47,11 @@ public class ReservationManagerService {
 
         return null;
     }
+
+    //event type: pickedUp
+    // send {truckId, miles, state}
+
+    //event type: fulfilled
 
     public Optional<Reservation> getReservation(Long reservationId) {
         return repository.findById(reservationId);

@@ -10,4 +10,7 @@ public class SubscribeService {
 //    public Consumer<Pie> truckBought() {
 //        return pie -> log.info("Received: {}", pie);
 //    }
+
+    // consuming event:
+    //{ truckId int, available boolean }
 }

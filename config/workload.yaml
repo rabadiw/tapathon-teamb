@@ -8,6 +8,17 @@ metadata:
 #    apps.tanzu.vmware.com/has-tests: true
 #    apps.tanzu.vmware.com/supply-chain: scanning
 spec:
+  serviceClaims:
+    - name:  postgres
+      ref:
+        apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+        kind: ResourceClaim
+        name: postgres-team-b
+    - name:  rabbitmq
+      ref:
+        apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+        kind: ResourceClaim
+        name: rmq-shared-team-b
   build:
     env:
       - name: BP_JVM_VERSION
