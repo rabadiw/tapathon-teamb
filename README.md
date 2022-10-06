@@ -1,3 +1,7 @@
+-- Tapathon 2022 NYC
+-- Team B
+-- Rental Manager
+
 # Introduction customer-profile
 customer-profile provides you an out-of-the-box application setup to implement your business logic. It is based on the
 Hexagonal Architecture (oversimplified, without _Port_ interfaces), where the packages `api` and `data` provide the 
